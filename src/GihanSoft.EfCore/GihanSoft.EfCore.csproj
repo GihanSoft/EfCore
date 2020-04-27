@@ -27,4 +27,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="GihanSoft.Security.Cryptography.Aes" Version="0.1.1" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.48" />
+  </ItemGroup>
+
 </Project>
