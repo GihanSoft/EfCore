@@ -39,6 +39,8 @@ namespace Gihan.EfCore {
                 if (encryptedAttribute != null && encryptedAttribute.EncryptName)
                     builder.Entity (entityType.ClrType).ToTable (entityType.Name.Hash (hash).EncodeBase64 ());
                 foreach (var property in entityType.GetProperties ()) {
+                    if (property?.PropertyInfo == null)
+                        continue;
                     var encryptedAttributeProp = property.PropertyInfo.GetCustomAttribute<EncryptedAttribute>()
                         ?? encryptedAttribute;
                     if (encryptedAttributeProp != null &&

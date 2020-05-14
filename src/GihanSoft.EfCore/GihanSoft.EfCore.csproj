@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/GihanSoft/Efcore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>0.1.1.0</Version>
+    <Version>0.1.1.1</Version>
     <Description>GihanSoft EfCore Package</Description>
     <PackageIcon>GihanSoft.png</PackageIcon>
   </PropertyGroup>
