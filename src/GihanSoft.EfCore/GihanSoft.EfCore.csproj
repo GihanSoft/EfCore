@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/GihanSoft/Efcore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>0.1.1.1</Version>
+    <Version>0.1.2</Version>
     <Description>GihanSoft EfCore Package</Description>
     <PackageIcon>GihanSoft.png</PackageIcon>
   </PropertyGroup>
@@ -25,7 +25,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GihanSoft.Security.Cryptography.Abstractions" Version="0.1.2"/>
-    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.49"/>
+    <PackageReference Include="GihanSoft.Security.Cryptography.Abstractions" Version="0.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.4" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.0.50" />
   </ItemGroup>
 </Project>

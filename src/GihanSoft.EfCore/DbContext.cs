@@ -20,14 +20,15 @@ namespace Gihan.EfCore {
                 foreach (var property in entityType.GetProperties ()) {
                     var index = property.PropertyInfo?.GetCustomAttribute<IndexAttribute> ();
                     if (index == null) continue;
-                    if (property.ClrType == typeof (string))
-                        modelBuilder.Entity (entityType.ClrType)
-                        .Property (property.Name)
-                        .HasMaxLength (450);
+                    //if (property.ClrType == typeof (string))
+                    //    modelBuilder.Entity (entityType.ClrType)
+                    //    .Property (property.Name)
+                    //    .HasMaxLength (450);
                     var indexBuilder = modelBuilder.Entity (entityType.ClrType)
                         .HasIndex (property.Name);
-                    if (index.IsUnique)
-                        indexBuilder.IsUnique ();
+                    indexBuilder = indexBuilder.IsUnique (index.IsUnique);
+                    if (!string.IsNullOrEmpty (index.Name))
+                        indexBuilder.HasName (index.Name);
                 }
             }
         }
