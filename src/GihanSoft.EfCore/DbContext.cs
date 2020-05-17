@@ -1,10 +1,8 @@
-﻿using System.Reflection;
-using System.Security.Cryptography;
-using GihanSoft;
-using GihanSoft.Security.Cryptography;
+﻿using GihanSoft.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 
-namespace Gihan.EfCore {
+namespace GihanSoft.EfCore
+{
     public class DbContext : Microsoft.EntityFrameworkCore.DbContext {
         private readonly ICrypto cryptographer;
 
@@ -15,60 +13,11 @@ namespace Gihan.EfCore {
             this.cryptographer = cryptographer;
         }
 
-        private static void UseIndexAttr (ModelBuilder modelBuilder) {
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes ()) {
-                foreach (var property in entityType.GetProperties ()) {
-                    var index = property.PropertyInfo?.GetCustomAttribute<IndexAttribute> ();
-                    if (index == null) continue;
-                    //if (property.ClrType == typeof (string))
-                    //    modelBuilder.Entity (entityType.ClrType)
-                    //    .Property (property.Name)
-                    //    .HasMaxLength (450);
-                    var indexBuilder = modelBuilder.Entity (entityType.ClrType)
-                        .HasIndex (property.Name);
-                    indexBuilder = indexBuilder.IsUnique (index.IsUnique);
-                    if (!string.IsNullOrEmpty (index.Name))
-                        indexBuilder.HasName (index.Name);
-                }
-            }
-        }
-
-        private static void UseEncryptionAttr (ModelBuilder builder, ICrypto cryptographer) {
-            var hash = SHA256.Create ();
-            foreach (var entityType in builder.Model.GetEntityTypes ()) {
-                var encryptedAttribute = entityType.ClrType.GetCustomAttribute<EncryptedAttribute> ();
-                if (encryptedAttribute != null && encryptedAttribute.EncryptName)
-                    builder.Entity (entityType.ClrType).ToTable (entityType.Name.Hash (hash).EncodeBase64 ());
-                foreach (var property in entityType.GetProperties ()) {
-                    if (property?.PropertyInfo == null)
-                        continue;
-                    var encryptedAttributeProp = property.PropertyInfo.GetCustomAttribute<EncryptedAttribute>()
-                        ?? encryptedAttribute;
-                    if (encryptedAttributeProp != null &&
-                        property.PropertyInfo.GetCustomAttribute<UnEncryptedAttribute> () is null) {
-                        if (encryptedAttributeProp.EncryptName)
-                            builder.Entity (entityType.ClrType).Property (property.Name).
-                        HasColumnName (property.Name.Hash (hash).EncodeBase64 ());
-                        var hasSalt = encryptedAttributeProp.UseSalt;
-                        var stringToEncryptedConverter =
-                            new StringToEncryptedConverter (cryptographer, hasSalt);
-                        if (property.ClrType == typeof (string))
-                            property.SetValueConverter (stringToEncryptedConverter);
-                        else
-                            property.SetValueConverter (
-                                new ValueToStringConverter (property.ClrType)
-                                .ComposeWith (stringToEncryptedConverter));
-                    }
-                }
-            }
-            hash.Dispose ();
-        }
-
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
-            UseIndexAttr (modelBuilder);
-            if (cryptographer != null)
-                UseEncryptionAttr (modelBuilder, cryptographer);
             base.OnModelCreating (modelBuilder);
+            modelBuilder.UseIndexAttribute ();
+            if (cryptographer != null)
+                modelBuilder.UseCryptography (cryptographer);
         }
     }
 }

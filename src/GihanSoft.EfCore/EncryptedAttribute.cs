@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gihan.EfCore {
+namespace GihanSoft.EfCore {
     [AttributeUsage (AttributeTargets.Class | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class EncryptedAttribute : Attribute {
         public bool UseSalt { get; set; } = true;

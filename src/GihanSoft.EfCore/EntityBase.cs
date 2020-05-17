@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Gihan.EfCore {
+namespace GihanSoft.EfCore {
     public interface IEntityBase<TId>
         where TId : struct {
             [UnEncrypted]

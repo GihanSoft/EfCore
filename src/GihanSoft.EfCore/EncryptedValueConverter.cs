@@ -4,7 +4,7 @@ using GihanSoft;
 using GihanSoft.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Gihan.EfCore {
+namespace GihanSoft.EfCore {
     public class ValueToStringConverter : ValueConverter<IConvertible, string> {
         protected static bool IsTypeValid (Type type) {
             return

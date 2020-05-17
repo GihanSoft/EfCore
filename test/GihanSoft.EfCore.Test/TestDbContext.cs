@@ -1,9 +1,6 @@
-﻿using Gihan.EfCore;
-using GihanSoft.Security.Cryptography;
+﻿using GihanSoft.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace GihanSoft.EfCore.Test
 {
@@ -19,7 +16,7 @@ namespace GihanSoft.EfCore.Test
         }
     }
 
-    public class TestDbContext : Gihan.EfCore.DbContext
+    public class TestDbContext : DbContext
     {
         public TestDbContext(DbContextOptions options, ICrypto cryptographer = null) : base(options, cryptographer)
         {
